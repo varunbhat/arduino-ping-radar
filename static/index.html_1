@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie8" lang="en-gb"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9" lang="en-gb"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en-gb">
+	<!--<![endif]-->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<head>
+		<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/highcharts-more.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script src="http://code.highcharts.com/themes/dark-unica.js"></script>
+		<script>
+			var angle_update = 0;
+			$(function() {
+				$('#container').highcharts({
+
+					chart : {
+						polar : true,
+						events : {
+							load : function() {
+								// set up the updating of the chart each second
+								var series = this.series[0];
+								setInterval(function() {
+									var x = angle_update % 360, // current time
+									    y = (Math.random() * 100) % 10;
+									angle_update += 45;
+									series.addPoint(y, true, true);
+								}, 1000);
+							}
+						}
+					},
+
+					title : {
+						text : 'Highcharts Polar Chart'
+					},
+
+					pane : {
+						startAngle : 0,
+						endAngle : 360
+					},
+
+					xAxis : {
+						tickInterval : 45,
+						min : 0,
+						max : 360,
+						labels : {
+							formatter : function() {
+								return this.value + '°';
+							}
+						}
+					},
+
+					yAxis : {
+						min : 0
+					},
+
+					plotOptions : {
+						series : {
+							pointStart : 0,
+							pointInterval : 45
+						},
+						column : {
+							pointPadding : 2,
+							groupPadding : 1
+						}
+					},
+
+					series : [{
+						type : 'area',
+						name : 'Line',
+						data : [5, 6, 7, 8, 9, 10, 11, 10]
+					}]
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="container" style="min-width: 310px; max-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
